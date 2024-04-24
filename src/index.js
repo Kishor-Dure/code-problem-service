@@ -3,6 +3,7 @@ const bodyParser = require('body-parser');
 
 const { PORT } = require('./config/server.config.js');
 const apiRouter = require('./routes/index.js');
+const errorHandler = require('./validators/errorhandler.js');
 
 const app = express();
 
@@ -16,6 +17,9 @@ app.use('/api', apiRouter);
 app.get('/ping', (req, res) => {
   return res.json({ message: 'Problem service is live' });
 });
+
+//last middleware if any errors came
+app.use(errorHandler);
 
 app.listen(PORT, () => {
   console.log(`Server Started at port ${PORT}`);
