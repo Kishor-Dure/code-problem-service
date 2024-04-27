@@ -2,6 +2,7 @@ const NotImplemented = require('./../errors/internalServes.error');
 const { ProblemService } = require('../services');
 const { ProblemRepository } = require('../repositories');
 const { StatusCodes } = require('http-status-codes');
+const NotFound = require('../errors/notfound.error');
 
 const problmeService = new ProblemService(new ProblemRepository());
 
@@ -23,17 +24,32 @@ async function addProblem(req, res, next) {
   }
 }
 
-function getProblem(req, res, next) {
+async function getProblem(req, res, next) {
   try {
-    throw new NotImplemented('addProblem');
+    const problem = await ProblemService.getProblem(req.params.id);
+    if (!problem) {
+      throw new NotFound('Problem', id);
+    }
+    return res.status(StatusCodes.OK).json({
+      success: true,
+      message: 'Successfully fetched a problem',
+      error: {},
+      data: problem,
+    });
   } catch (error) {
     next(error);
   }
 }
 
-function getProblems(req, res, next) {
+async function getProblems(req, res, next) {
   try {
-    throw new NotImplemented('addProblem');
+    const response = await problmeService.getAllProblems();
+    return res.status(StatusCodes.OK).json({
+      success: true,
+      message: 'Successfully fetched all the problems',
+      error: {},
+      data: response,
+    });
   } catch (error) {
     next(error);
   }
