@@ -3,7 +3,7 @@ const bodyParser = require('body-parser');
 
 const { PORT } = require('./config/server.config.js');
 const apiRouter = require('./routes/index.js');
-const errorHandler = require('./validators/errorhandler.js');
+const errorHandler = require('./utils/errorhandler.js');
 const connectToDB = require('./config/db.config.js');
 
 const app = express();
@@ -25,5 +25,4 @@ app.use(errorHandler);
 app.listen(PORT, async () => {
   console.log(`Server Started at port ${PORT}`);
   await connectToDB();
-  console.log('Successfully connected to DB');
 });
