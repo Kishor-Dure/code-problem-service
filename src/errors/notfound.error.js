@@ -6,9 +6,10 @@ class NotFound extends BaseError {
     super(
       'NotFound',
       StatusCodes.NOT_FOUND,
-      `The requested resource ${resourceName} with value ${resourceValue} not found.` {
+      `The requested resource ${resourceName} with value ${resourceValue} not found.`,
+      {
         resourceName,
-        resourceValue
+        resourceValue,
       }
     );
   }
